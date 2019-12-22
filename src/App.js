@@ -31,7 +31,9 @@ class App extends Component {
         loaded: 0,
         duration: 0,
         playbackRate: 1.0,
-        loop: false
+        loop: false,
+        loopStart: 0,
+        loopStop: 999999999
     }
 
     load = url => {
@@ -80,11 +82,36 @@ handleSetPlaybackRate = e => {
 }
 
 rememberLoopStart = () => {
-    this.setState({loopStart: this.state.playedSeconds})
+    var loopStart = this.state.playedSeconds;
+    this.setState({loopStart: loopStart})
+    this.setLoopValuesInInputs(loopStart, this.state.loopStop)
 }
 
 rememberLoopStop = () => {
-    this.setState({loopStop: this.state.playedSeconds})
+    var loopStop = this.state.playedSeconds;
+    this.setState({loopStop: loopStop})
+    this.setLoopValuesInInputs(this.state.loopStart, loopStop)
+}
+
+setLoop = () => {
+    var loopStart = this.loopStartInput.value
+    var loopStop = this.loopStopInput.value
+    this.setState({loopStart: loopStart})
+    this.setState({loopStop: loopStop})
+    this.setLoopValuesInInputs(loopStart, loopStop)
+}
+
+clearLoop = () => {
+    var loopStart = 0
+    var loopStop = 999999
+    this.setState({loopStart: loopStart})
+    this.setState({loopStop: loopStop})
+    this.setLoopValuesInInputs(loopStart, loopStop)
+}
+
+setLoopValuesInInputs = (loopStart, loopStop) => {
+    this.loopStartInput.value = loopStart
+    this.loopStopInput.value = loopStop
 }
 
 handleTogglePIP = () => {
@@ -219,7 +246,11 @@ render () {
         <th>Loop segment</th>
         <td>
             <button onClick={this.rememberLoopStart}>start</button>
+            <input ref={input => { this.loopStartInput = input }} type='text' />
             <button onClick={this.rememberLoopStop}>stop</button>
+            <input ref={input => { this.loopStopInput = input }} type='text' />
+            <button onClick={this.setLoop}>set</button>
+            <button onClick={this.clearLoop}>clear</button>
         </td>
     </tr>
             <tr>
