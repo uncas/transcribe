@@ -79,6 +79,14 @@ handleSetPlaybackRate = e => {
     this.setState({ playbackRate: parseFloat(e.target.value) })
 }
 
+rememberLoopStart = () => {
+    this.setState({loopStart: this.state.playedSeconds})
+}
+
+rememberLoopStop = () => {
+    this.setState({loopStop: this.state.playedSeconds})
+}
+
 handleTogglePIP = () => {
     this.setState({ pip: !this.state.pip })
 }
@@ -123,8 +131,8 @@ handleProgress = state => {
         this.setState(state)
     }
 
-    if (10 < state.playedSeconds) {
-        this.player.seekTo(5.5, 'seconds')
+    if (this.state.loopStop < state.playedSeconds) {
+        this.player.seekTo(this.state.loopStart, 'seconds')
     }
 }
 
@@ -207,6 +215,13 @@ render () {
         <button onClick={this.handleTogglePIP}>{pip ? 'Disable PiP' : 'Enable PiP'}</button>}
             </td>
             </tr>
+    <tr>
+        <th>Loop segment</th>
+        <td>
+            <button onClick={this.rememberLoopStart}>start</button>
+            <button onClick={this.rememberLoopStop}>stop</button>
+        </td>
+    </tr>
             <tr>
             <th>Speed</th>
             <td>
