@@ -122,6 +122,10 @@ handleProgress = state => {
     if (!this.state.seeking) {
         this.setState(state)
     }
+
+    if (10 < state.playedSeconds) {
+        this.player.seekTo(5.5, 'seconds')
+    }
 }
 
 handleEnded = () => {
@@ -183,6 +187,7 @@ render () {
     onSeek={e => console.log('onSeek', e)}
     onEnded={this.handleEnded}
     onError={e => console.log('onError', e)}
+    progressInterval='100'
     onProgress={this.handleProgress}
     onDuration={this.handleDuration}
     />
