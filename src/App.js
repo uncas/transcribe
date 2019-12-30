@@ -196,7 +196,7 @@ render () {
     return (
         <div className='app'>
         <section className='section'>
-        <h1>ReactPlayer Demo</h1>
+        <h1>Transcribing</h1>
     <div className='player-wrapper'>
         <ReactPlayer
     ref={this.ref}
@@ -256,6 +256,8 @@ render () {
             <tr>
             <th>Speed</th>
             <td>
+            <button onClick={this.handleSetPlaybackRate} value={0.5}>0.5x</button>
+                <button onClick={this.handleSetPlaybackRate} value={0.75}>0.75x</button>
             <button onClick={this.handleSetPlaybackRate} value={1}>1x</button>
         <button onClick={this.handleSetPlaybackRate} value={1.5}>1.5x</button>
         <button onClick={this.handleSetPlaybackRate} value={2}>2x</button>
